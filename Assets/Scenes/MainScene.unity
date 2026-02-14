@@ -213,7 +213,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 2bb4469227e5c1144af65b99421125eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -254,7 +254,7 @@ Transform:
   m_GameObject: {fileID: 27635277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.23736687, z: -0, w: 0.97142005}
-  m_LocalPosition: {x: 0.12, y: -4.69, z: 0}
+  m_LocalPosition: {x: 0.41, y: -4.69, z: 0}
   m_LocalScale: {x: 1.601, y: 1.601, z: 1.601}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 1222793338}
   - component: {fileID: 1222793339}
   m_Layer: 0
-  m_Name: BallSpawner
+  m_Name: ObjectSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -633,9 +633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawn
   objectPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3363246170709323509, guid: 442d8fef9df2bd046a7a2cec05732235, type: 3}
+  - {fileID: 3027654960414844757, guid: 03f57b75a96c10e41bcfaf54a9005967, type: 3}
 --- !u!1 &1994168196
 GameObject:
   m_ObjectHideFlags: 0
