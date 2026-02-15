@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float drag = 5f;
     private int objectCount = 0;
+    private float xLimit = 10;
 
     private void OnEnable()
     {
@@ -39,6 +40,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerRb.linearVelocity = new Vector3(0, playerRb.linearVelocity.y, playerRb.linearVelocity.z);
+        }
+        if (transform.position.x < -xLimit)
+        {
+            transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x > xLimit)
+        {
+            transform.position = new Vector3(xLimit, transform.position.y, transform.position.z);
         }
     }
     private void OnCollisionEnter(Collision collision)
