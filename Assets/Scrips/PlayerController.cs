@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float drag = 5f;
+    private int objectCount = 0;
 
     private void OnEnable()
     {
@@ -38,6 +39,16 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerRb.linearVelocity = new Vector3(0, playerRb.linearVelocity.y, playerRb.linearVelocity.z);
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("GoodObjects"))
+        {
+            objectCount++;
+            Debug.Log("Good Objects Count: " + objectCount);
+            Destroy(collision.gameObject);
         }
     }
 }
