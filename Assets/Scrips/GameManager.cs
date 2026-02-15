@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public GameObject[] objectPrefabs;
@@ -35,15 +36,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void UpdateScore(int scoreCounter)
+    public void UpdateScore(int scoreCounter)
     {
         score += scoreCounter;
         scoreText.text = "Score: " + score;
     }
     public void GameOver()
     {
-        gameOverText.gameObject.SetActive(true);
         isGameActive = false;
+        gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
     }
     public void StartGame(int difficulty)
@@ -61,5 +62,9 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
 
         titleScreen.gameObject.SetActive(false);
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

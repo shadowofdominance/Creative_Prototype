@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions;
     private Rigidbody playerRb;
+    private GameManager gameManager;
 
     private InputAction moveAction;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         moveAction = inputActions.FindAction("Move");
         playerRb = GetComponent<Rigidbody>();
         playerRb.linearDamping = drag;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -57,6 +59,13 @@ public class PlayerController : MonoBehaviour
         {
             objectCount++;
             Debug.Log("Good Objects Count: " + objectCount);
+            gameManager.UpdateScore(1);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("BadObjects"))
+        {
+            Debug.Log("Game Over!");
+            gameManager.GameOver();
             Destroy(collision.gameObject);
         }
     }
