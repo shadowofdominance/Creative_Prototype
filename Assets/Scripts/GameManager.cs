@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public GameObject titleScreen;
     public GameObject heartPrefab;
-    public Transform heartsContainer;
 
     private float xRange = 10;
     private float yPos = 4;
@@ -50,10 +49,9 @@ public class GameManager : MonoBehaviour
     {
         lives -= livesToRemove;
 
-        if (heartsList.Count > 0)
+        if (lives >= 0 && lives < heartsList.Count)
         {
-            Destroy(heartsList[heartsList.Count - 1]);
-            heartsList.RemoveAt(heartsList.Count - 1);
+            Destroy(heartsList[lives]);
         }
 
         if (lives <= 0)
@@ -64,9 +62,14 @@ public class GameManager : MonoBehaviour
 
     private void InitializeHearts()
     {
+        // Position hearts in the top-left corner of the screen in world space
+        Vector3 heartStartPos = new Vector3(9, 2, 3); // Adjust these values to position on screen
+        float heartSpacing = 1f; // Space between hearts
+
         for (int i = 0; i < lives; i++)
         {
-            GameObject heart = Instantiate(heartPrefab, heartsContainer);
+            Vector3 heartPos = heartStartPos + new Vector3(i * heartSpacing, 0, 0);
+            GameObject heart = Instantiate(heartPrefab, heartPos, heartPrefab.transform.rotation);
             heartsList.Add(heart);
         }
     }

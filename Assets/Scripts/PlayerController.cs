@@ -14,6 +14,13 @@ public class PlayerController : MonoBehaviour
     private int objectCount = 0;
     private float xLimit = 10;
 
+    [Header("Particle Effects")]
+    [SerializeField] private ParticleSystem moveParticles;
+
+    [Header("Tilt Settings")]
+    [SerializeField] private float tiltAngle = 15f;
+    [SerializeField] private float tiltSpeed = 5f;
+
     private void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -38,11 +45,33 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(horizontalInput) > 0.01f)
         {
             playerRb.AddForce(Vector3.right * horizontalInput * moveSpeed, ForceMode.Force);
+
+            // Play movement particles
+            if (moveParticles != null && !moveParticles.isPlaying)
+            {
+                moveParticles.Play();
+            }
+
+            // Apply tilt based on movement direction
+            float targetTilt = -horizontalInput * tiltAngle;
+            Quaternion targetRotation = Quaternion.Euler(0, 0, targetTilt);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSpeed);
         }
         else
         {
             playerRb.linearVelocity = new Vector3(0, playerRb.linearVelocity.y, playerRb.linearVelocity.z);
+
+            // Stop movement particles
+            if (moveParticles != null && moveParticles.isPlaying)
+            {
+                moveParticles.Stop();
+            }
+
+            // Return to upright position
+            Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSpeed);
         }
+
         if (transform.position.x < -xLimit)
         {
             transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
