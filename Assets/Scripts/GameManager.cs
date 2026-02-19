@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public GameObject heartPrefab;
 
-    private float xRange = 10;
+    private float xRange = 8;
     private float yPos = 4;
     private float startDelay = 1f;
     private int score;
@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     private int lives = 3;
     private List<GameObject> heartsList = new List<GameObject>();
     bool isGameActive;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip gameOverSound;
+    [SerializeField] private AudioClip backgroundMusic;
 
     IEnumerator RandomObjectSpawner()
     {
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
     private void InitializeHearts()
     {
         // Position hearts in the top-left corner of the screen in world space
-        Vector3 heartStartPos = new Vector3(9, 2, 3); // Adjust these values to position on screen
+        Vector3 heartStartPos = new Vector3(7, 2, 0); // Adjust these values to position on screen
         float heartSpacing = 1f; // Space between hearts
 
         for (int i = 0; i < lives; i++)
@@ -79,6 +84,17 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
+
+        // Stop background music and play game over sound
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+
+            if (gameOverSound != null)
+            {
+                audioSource.PlayOneShot(gameOverSound);
+            }
+        }
     }
     public void StartGame(int difficulty)
     {
@@ -98,6 +114,14 @@ public class GameManager : MonoBehaviour
         InitializeHearts();
 
         titleScreen.gameObject.SetActive(false);
+
+        // Play background music
+        if (audioSource != null && backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
     public void RestartGame()
     {

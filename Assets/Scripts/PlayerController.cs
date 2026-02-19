@@ -10,9 +10,8 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
 
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float drag = 5f;
     private int objectCount = 0;
-    private float xLimit = 10;
+    private float xLimit = 8;
 
     [Header("Particle Effects")]
     [SerializeField] private ParticleSystem moveParticles;
@@ -20,6 +19,12 @@ public class PlayerController : MonoBehaviour
     [Header("Tilt Settings")]
     [SerializeField] private float tiltAngle = 15f;
     [SerializeField] private float tiltSpeed = 5f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip movementSound;
+    [SerializeField] private AudioClip goodObjectSound;
+    [SerializeField] private AudioClip badObjectSound;
 
     private void OnEnable()
     {
@@ -33,7 +38,6 @@ public class PlayerController : MonoBehaviour
     {
         moveAction = inputActions.FindAction("Move");
         playerRb = GetComponent<Rigidbody>();
-        playerRb.linearDamping = drag;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -88,12 +92,26 @@ public class PlayerController : MonoBehaviour
             objectCount++;
             Debug.Log("Good Objects Count: " + objectCount);
             gameManager.UpdateScore(1);
+
+            // Play good object sound
+            if (goodObjectSound != null)
+            {
+                AudioSource.PlayClipAtPoint(goodObjectSound, transform.position);
+            }
+
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("BadObjects"))
         {
             Debug.Log("Lost a life!");
             gameManager.UpdateLives(1);
+
+            // Play bad object sound
+            if (badObjectSound != null)
+            {
+                AudioSource.PlayClipAtPoint(badObjectSound, transform.position);
+            }
+
             Destroy(collision.gameObject);
         }
     }
