@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
     {
         moveAction = inputActions.FindAction("Move");
         playerRb = GetComponent<Rigidbody>();
+
+        // Reset Rigidbody state to prevent carryover issues on restart
+        playerRb.linearVelocity = Vector3.zero;
+        playerRb.angularVelocity = Vector3.zero;
+
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -48,12 +53,18 @@ public class PlayerController : MonoBehaviour
 
         if (Mathf.Abs(horizontalInput) > 0.01f)
         {
-            playerRb.AddForce(Vector3.right * horizontalInput * moveSpeed, ForceMode.Force);
-
             // Play movement particles
             if (moveParticles != null && !moveParticles.isPlaying)
             {
                 moveParticles.Play();
+            }
+
+            // Play movement sound
+            if (audioSource != null && movementSound != null && !audioSource.isPlaying)
+            {
+                audioSource.clip = movementSound;
+                audioSource.loop = true;
+                audioSource.Play();
             }
 
             // Apply tilt based on movement direction
@@ -63,19 +74,23 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            playerRb.linearVelocity = new Vector3(0, playerRb.linearVelocity.y, playerRb.linearVelocity.z);
-
             // Stop movement particles
             if (moveParticles != null && moveParticles.isPlaying)
             {
                 moveParticles.Stop();
             }
 
+            // Stop movement sound
+            if (audioSource != null && audioSource.isPlaying && audioSource.clip == movementSound)
+            {
+                audioSource.Stop();
+            }
+
             // Return to upright position
             Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSpeed);
         }
-
+        // Clamp position to boundaries
         if (transform.position.x < -xLimit)
         {
             transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
@@ -84,6 +99,23 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(xLimit, transform.position.y, transform.position.z);
         }
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
+        float horizontalInput = moveInput.x;
+
+        if (Mathf.Abs(horizontalInput) > 0.01f)
+        {
+            playerRb.AddForce(Vector3.right * horizontalInput * moveSpeed, ForceMode.Force);
+        }
+        else
+        {
+            playerRb.linearVelocity = new Vector3(0, playerRb.linearVelocity.y, playerRb.linearVelocity.z);
+        }
+
+
     }
     private void OnCollisionEnter(Collision collision)
     {

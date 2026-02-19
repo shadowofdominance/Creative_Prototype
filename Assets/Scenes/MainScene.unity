@@ -275,12 +275,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  moveSpeed: 90
+  moveSpeed: 140
   moveParticles: {fileID: 1599707120}
   tiltAngle: 20.5
   tiltSpeed: 1.52
   audioSource: {fileID: 27635284}
-  movementSound: {fileID: 8300000, guid: f00e1654bc067a747acf764df7b1e17f, type: 3}
+  movementSound: {fileID: 0}
   goodObjectSound: {fileID: 8300000, guid: 113ee460fadc340e4957a7404a9fbb27, type: 3}
   badObjectSound: {fileID: 8300000, guid: e7ee25a47d63b46cdaf65480d62b405c, type: 3}
 --- !u!82 &27635284
@@ -1631,14 +1631,14 @@ RectTransform:
   m_GameObject: {fileID: 657883565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.24, y: 2.24, z: 2.24}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 991412178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -63, y: 119}
+  m_AnchoredPosition: {x: -150.2, y: 119}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &657883567
@@ -2137,15 +2137,15 @@ RectTransform:
   m_GameObject: {fileID: 1186847465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 380119117}
   m_Father: {fileID: 991412178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11, y: -45}
+  m_AnchoredPosition: {x: 6.56, y: -45}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186847467
@@ -2289,6 +2289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   objectPrefabs:
   - {fileID: 2752266846942812301, guid: 01fba43840893414a83863004e3a487b, type: 3}
+  - {fileID: 9021979860543945138, guid: e02b31792a067c74a81e275fcda3930b, type: 3}
   - {fileID: 6419983093049870405, guid: 6bc98f1b112f092488fb1a3c492a78b9, type: 3}
   - {fileID: 5966102640036833586, guid: e927a284281746d4487d18faa7c6b6d2, type: 3}
   - {fileID: 5300853709188113441, guid: 0ccbfffbd430ecc4cb3e46dbd14c0bbf, type: 3}

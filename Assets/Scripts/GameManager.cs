@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     {
         // Position hearts in the top-left corner of the screen in world space
         Vector3 heartStartPos = new Vector3(7, 2, 0); // Adjust these values to position on screen
-        float heartSpacing = 1f; // Space between hearts
+        float heartSpacing = .5f; // Space between hearts
 
         for (int i = 0; i < lives; i++)
         {
